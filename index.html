@@ -3,58 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ข้อสอบปรนัยเรื่องตัวแปร</title>
+  <title>Lua Part 2: Logic & Conditions Quiz</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#f4f6f8; padding:20px; }
-    h1 { text-align:center; }
-    .sheet { max-width:900px; margin:auto; background:white; border-radius:8px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.1);}    
-    .question { margin-bottom:18px; }
-    .choice { margin-left:20px; }
-    button { margin-top:20px; padding:10px 16px; border:none; border-radius:6px; cursor:pointer; }
-    .check { background:#4caf50; color:white; }
-    .result { margin-top:20px; font-weight:bold; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .box {
+      max-width: 900px;
+      margin: auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 18px;
+    }
+    .choice {
+      margin-left: 20px;
+    }
+    button {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      background: #4caf50;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <h1>📝 แบบทดสอบปรนัย เรื่องตัวแปร (Variables)</h1>
-  <div class="sheet" id="quiz"></div>
-  <div class="sheet">
-    <button class="check" onclick="checkAnswer()">ตรวจคำตอบ</button>
-    <div class="result" id="result"></div>
-  </div>
+
+<h1>🧠 Lua Part 2: Logic & Conditions</h1>
+
+<div class="box" id="quiz"></div>
+
+<div class="box" style="margin-top:20px; text-align:center;">
+  <button onclick="checkAnswer()">ตรวจคำตอบ</button>
+  <div class="result" id="result"></div>
+</div>
 
 <script>
 const questions = [
-  {q:"1) ตัวแปรถูกเปรียบเทียบเหมือนกับอะไร?", choices:["กล่อง","ถังขยะ","ไฟล์","โฟลเดอร์"], a:0},
-  {q:"2) String คือข้อมูลประเภทใด?", choices:["ตัวเลข","ข้อความ","จริง/เท็จ","โค้ด"], a:1},
-  {q:"3) Number ใช้เก็บข้อมูลแบบใด?", choices:["ข้อความ","สัญลักษณ์","ตัวเลข","เงื่อนไข"], a:2},
-  {q:"4) Boolean มีค่าได้กี่แบบ?", choices:["1","2","3","ไม่จำกัด"], a:1},
-  {q:"5) ก่อนสร้างตัวแปรใน Lua ต้องใช้คำใด?", choices:["var","let","local","set"], a:2},
-  {q:"6) ชื่อตัวแปรสามารถซ้ำกับ Reserved word ได้หรือไม่?", choices:["ได้","ไม่ได้","ได้บางกรณี","ไม่แน่ใจ"], a:1},
-  {q:"7) เครื่องหมายใดใช้กำหนดค่าให้ตัวแปร?", choices:["==","=","!=","=>"], a:1},
-  {q:"8) local score = 10 ตัวแปร score เป็นประเภทใด?", choices:["String","Boolean","Function","Number"], a:3},
-  {q:"9) local isReady = true ตัวแปรนี้เป็นประเภทใด?", choices:["String","Number","Boolean","Table"], a:2},
-  {q:"10) จากบทเรียน ตัวแปรมีทั้งหมดกี่ประเภทหลัก?", choices:["2","3","4","5"], a:1}
+  { q: "1) if 5 == 5 then จะได้ผลลัพธ์เป็นอะไร?", choices: ["true", "false", "Error", "nil"], a: 0 },
+  { q: "2) เครื่องหมาย == ใช้ทำอะไร", choices: ["กำหนดค่า", "เปรียบเทียบ", "บวกค่า", "ลบค่า"], a: 1 },
+  { q: "3) ผลลัพธ์ของ 10 > 3 คืออะไร", choices: ["true", "false", "Error", "String"], a: 0 },
+  { q: "4) ข้อใดเขียน if ถูกต้อง", choices: ["if x = 5 then", "if x == 5", "if x == 5 then", "if (x == 5)"], a: 2 },
+  { q: "5) if false then จะเกิดอะไรขึ้น", choices: ["เข้า if", "Error", "ไม่เข้า if", "แสดง false"], a: 2 },
+
+  { q: "6) ค่าที่ if ตรวจสอบได้ต้องเป็นชนิดใด", choices: ["Number", "String", "Boolean", "Table"], a: 2 },
+  { q: "7) true and true ได้ค่าอะไร", choices: ["true", "false", "nil", "Error"], a: 0 },
+  { q: "8) true and false ได้ค่าอะไร", choices: ["true", "false", "nil", "Error"], a: 1 },
+  { q: "9) false or true ได้ค่าอะไร", choices: ["true", "false", "nil", "Error"], a: 0 },
+  { q: "10) false or false ได้ค่าอะไร", choices: ["true", "false", "nil", "Error"], a: 1 },
+
+  { q: "11) ตัวดำเนินการใดหมายถึง ต้องจริงทั้งสองฝั่ง", choices: ["or", "and", "not", "=="], a: 1 },
+  { q: "12) ตัวดำเนินการใดหมายถึง มีจริงอย่างใดอย่างหนึ่ง", choices: ["or", "and", "not", "="], a: 0 },
+  { q: "13) 5 ~= 3 หมายถึงอะไร", choices: ["เท่ากัน", "ไม่เท่ากัน", "มากกว่า", "น้อยกว่า"], a: 1 },
+  { q: "14) 2 == 2 and 3 == 3 ได้ค่าอะไร", choices: ["true", "false", "nil", "Error"], a: 0 },
+  { q: "15) 2 == 3 or 1 == 1 ได้ค่าอะไร", choices: ["true", "false", "nil", "Error"], a: 0 },
+
+  { q: "16) if 1 + 10 == 11 then เงื่อนไขนี้ได้ค่าอะไร", choices: ["true", "false", "Error", "String"], a: 0 },
+  { q: "17) ผลลัพธ์ของ if คือชนิดข้อมูลใด", choices: ["Number", "String", "Boolean", "Table"], a: 2 },
+  { q: "18) ถ้าเงื่อนไขไม่เป็น true หรือ false จะเกิดอะไรขึ้น", choices: ["ทำงานปกติ", "ได้ค่า nil", "เกิด Error", "ถูกแปลงอัตโนมัติ"], a: 2 },
+  { q: "19) ข้อใดคือการใช้ if เพื่อการตัดสินใจ", choices: ["เก็บข้อมูล", "วนลูป", "ตรวจเงื่อนไข", "สร้างตัวแปร"], a: 2 },
+  { q: "20) if...then ใช้ทำอะไรเป็นหลัก", choices: ["คำนวณเลข", "ตัดสินใจจากเงื่อนไข", "เก็บข้อความ", "สร้างฟังก์ชัน"], a: 1 }
 ];
 
-const quizDiv = document.getElementById("quiz");
-questions.forEach((item,i)=>{
+const quiz = document.getElementById("quiz");
+
+questions.forEach((item, i) => {
   let html = `<div class='question'><b>${item.q}</b>`;
-  item.choices.forEach((c,idx)=>{
+  item.choices.forEach((c, idx) => {
     html += `<div class='choice'><label><input type='radio' name='q${i}' value='${idx}'> ${c}</label></div>`;
   });
   html += `</div>`;
-  quizDiv.innerHTML += html;
+  quiz.innerHTML += html;
 });
 
-function checkAnswer(){
+function checkAnswer() {
   let score = 0;
-  questions.forEach((item,i)=>{
+  questions.forEach((item, i) => {
     const selected = document.querySelector(`input[name='q${i}']:checked`);
-    if(selected && Number(selected.value) === item.a) score++;
+    if (selected && Number(selected.value) === item.a) {
+      score++;
+    }
   });
+
   document.getElementById("result").innerText = `คุณได้ ${score} / ${questions.length} คะแนน`;
 }
 </script>
+
 </body>
 </html>
